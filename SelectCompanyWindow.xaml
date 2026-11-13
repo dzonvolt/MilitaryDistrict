@@ -1,0 +1,23 @@
+﻿<Window x:Class="MilitaryDistrict.SelectCompanyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MilitaryDistrict"
+        mc:Ignorable="d"
+        Title="Выбор воинской части" MinHeight="150" MinWidth="200" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="20">
+            <TextBlock Text="Выберите роту, в которую перевести весь состав" Foreground="Gray" Margin="0,0,0,7"/>
+            <ComboBox Name="CompanyCB" DisplayMemberPath="SelectableIDString" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+        <UniformGrid Grid.Row="1" Columns="2">
+            <Button Name="CancelButton" Content="Отменить удаление" Click="CancelButton_Click" Background="LightCoral"/>
+            <Button Name="ConfirmButton" Content="Подтвердить удаление" Click="ConfirmButton_Click"/>
+        </UniformGrid>
+    </Grid>
+</Window>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../MilitaryDistrictPropertyService.Tests/MilitaryDistrictPropertyService.Tests.csproj" Id="5c17213f-3730-443e-b1c9-728f04cb28af" />
+  <Project Path="MilitaryDistrict.csproj" Id="05dd47e1-62ee-402a-97dc-ac1d03d0c016" />
+</Solution>

@@ -1,0 +1,196 @@
+﻿<Page x:Class="MilitaryDistrict.UnitPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MilitaryDistrict"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      FontSize="15"
+      Title="UnitPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding unit.locations.FullAddress}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="10"/>
+
+        <StackPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Тип войск:" Margin="0,0,5,0"/>
+                <ComboBox MinWidth="200" ItemsSource="{Binding TroopTypes}" SelectedItem="{Binding unit.troop_types}" DisplayMemberPath="name"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Коэффициент налога на недвижимость:" Margin="0,0,5,0"/>
+                <TextBlock Text="{Binding unit.locations.PropertyTaxRate, StringFormat='{}{0:F2}'}"/>
+            </StackPanel>
+            <Separator/>
+        </StackPanel>
+
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+            <TextBlock Text="Поиск: " VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox Name="SearchTB" Width="150" Margin="0,0,15,0" TextChanged="SearchTB_TextChanged"/>
+            <ComboBox Name="ViewCB" SelectionChanged="ViewCB_SelectionChanged" Margin="0,0,15,0">
+                <ComboBoxItem Content="Персонал" IsSelected="True"/>
+                <ComboBoxItem Content="Вооружение"/>
+                <ComboBoxItem Content="Снаряжение"/>
+                <ComboBoxItem Content="Роты"/>
+            </ComboBox>
+            <ComboBox Name="DeletedCB" SelectionChanged="DeletedCB_SelectionChanged" Visibility="{Binding DeletedComboBoxVisibility}" Margin="0,0,15,0">
+                <ComboBoxItem Content="Текущие" IsSelected="True"/>
+                <ComboBoxItem Content="Списанные"/>
+            </ComboBox>
+            <ComboBox Name="PersonnelPositionCB" SelectionChanged="PersonnelPositionCB_SelectionChanged" Visibility="{Binding PersonnelVisibility}" Margin="0,0,15,0"/>
+            <ComboBox Name="PersonnelRankCB" SelectionChanged="PersonnelRankCB_SelectionChanged" Visibility="{Binding PersonnelVisibility}" Margin="0,0,15,0"/>
+            <ComboBox Name="PersonnelCompanyCB" SelectionChanged="PersonnelCompanyCB_SelectionChanged" Visibility="{Binding PersonnelVisibility}" DisplayMemberPath="SelectableIDString" Margin="0,0,15,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Visibility="{Binding PersonnelVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="AddPersonnelButton" Content="Добавить персонал" Click="AddPersonnelButton_Click"/>
+            <ListView Name="PersonnelListView" Grid.Row="1" ItemsSource="{Binding Personnel}" HorizontalContentAlignment="Stretch" Background="{StaticResource BackgroundColor}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="EditPersonnelMenuItem" Header="Редактировать" Click="EditPersonnelMenuItem_Click"/>
+                        <MenuItem Name="DeletePersonnelMenuItem" Header="Списать" Click="DeletePersonnelMenuItem_Click"/>
+                        <MenuItem Name="PrintPersonnelMenuItem" Header="Печать" Click="PrintPersonnelMenuItem_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1">
+                            <Grid Height="125">
+                                <StackPanel VerticalAlignment="Center" Margin="5">
+                                    <TextBlock Text="{Binding FullName, StringFormat='ФИО: {0}'}"/>
+                                    <TextBlock Text="{Binding position, StringFormat='Должность: {0}'}"/>
+                                    <TextBlock Text="{Binding rank, StringFormat='Звание: {0}'}"/>
+                                    <TextBlock Text="{Binding birth_date, StringFormat='Дата рождения: {0:dd.MM.yyyy}'}"/>
+                                    <TextBlock Text="{Binding enlistment_date, StringFormat='Дата зачисления: {0:dd.MM.yyyy}'}"/>
+                                    <TextBlock Text="{Binding company_id, StringFormat='Номер роты: {0}'}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+
+        <Grid Grid.Row="3" Visibility="{Binding WeaponryVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="AddWeaponryButton" Content="Добавить вооружение" Click="AddWeaponryButton_Click"/>
+            <ListView Name="WeaponryListView" Grid.Row="1" ItemsSource="{Binding Weaponry}" HorizontalContentAlignment="Stretch"  Background="{StaticResource BackgroundColor}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="EditWeaponryMenuItem" Header="Редактировать" Click="EditWeaponryMenuItem_Click"/>
+                        <MenuItem Name="DeleteWeaponryMenuItem" Header="Списать" Click="DeleteWeaponryMenuItem_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Center" Margin="5">
+                                    <TextBlock Text="{Binding name, StringFormat='Наименование: {0}'}"/>
+                                    <TextBlock Text="{Binding specs, StringFormat='Спецификация: {0}'}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="3" Visibility="{Binding EquipmentVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="AddEquipmentButton" Content="Добавить снаряжение" Click="AddEquipmentButton_Click"/>
+            <ListView Name="EquipmentListView" Grid.Row="1" ItemsSource="{Binding Equipment}" HorizontalContentAlignment="Stretch" Background="{StaticResource BackgroundColor}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="EditEquipmentMenuItem" Header="Редактировать" Click="EditEquipmentMenuItem_Click"/>
+                        <MenuItem Name="DeleteEquipmentMenuItem" Header="Списать" Click="DeleteEquipmentMenuItem_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Center" Margin="5">
+                                    <TextBlock Text="{Binding name, StringFormat='Наименование: {0}'}"/>
+                                    <TextBlock Text="{Binding specs, StringFormat='Спецификация: {0}'}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="3" Visibility="{Binding CompaniesVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="AddCompanyButton" Content="Добавить роту" Click="AddCompanyButton_Click"/>
+            <ListView Name="CompaniesListView" Grid.Row="1" ItemsSource="{Binding Companies}" HorizontalContentAlignment="Stretch" Background="{StaticResource BackgroundColor}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="DeleteCompanyMenuItem" Header="Удалить" Click="DeleteCompanyMenuItem_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Center" Margin="5">
+                                    <TextBlock Text="{Binding id, StringFormat='Номер роты: {0}'}"/>
+                                    <TextBlock Text="{Binding personnel.Count, StringFormat='Количество персонала: {0}'}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+        <UniformGrid Columns="2" Grid.Row="4">
+            <Button Name="DeleteButton" Content="Удалить воинскую часть" Background="LightCoral" Click="DeleteButton_Click"/>
+            <Button Name="SaveButton" Content="Сохранить данные" Background="LightGreen" Click="SaveButton_Click"/>
+        </UniformGrid>
+    </Grid>
+</Page>

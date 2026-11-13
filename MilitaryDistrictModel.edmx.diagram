@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="598bf675517c41d1952fcb68a5fc6156" Name="Diagram1">
+        <EntityTypeShape EntityType="MilitaryDistrictModel.companies" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.equipment" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.locations" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.personnel" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.troop_types" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.units" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MilitaryDistrictModel.weaponry" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_company" ManuallyRouted="false" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_unit" ManuallyRouted="false" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_unit_equip" ManuallyRouted="false" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_location" ManuallyRouted="false" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_troop_type" ManuallyRouted="false" />
+        <AssociationConnector Association="MilitaryDistrictModel.fk_unit_weapon" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

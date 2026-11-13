@@ -1,0 +1,69 @@
+﻿<Page x:Class="MilitaryDistrict.UnitsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MilitaryDistrict"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UnitsPage"
+      FontSize="15" Loaded="Page_Loaded">
+
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Список воинских частей" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="23"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                <TextBlock Text="Поиск: " HorizontalAlignment="Center"/>
+                <TextBox Name="SearchTB" Width="150" HorizontalAlignment="Center" TextChanged="SearchTB_TextChanged"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                <TextBlock Text="Сортировка: " HorizontalAlignment="Center"/>
+                <ComboBox Name="SortCB" MinWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="SortCB_SelectionChanged">
+                    <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                    <ComboBoxItem Content="Количество рот по возрастанию"/>
+                    <ComboBoxItem Content="Количество рот по убыванию"/>
+                    <ComboBoxItem Content="Количество снаряжения по возрастанию"/>
+                    <ComboBoxItem Content="Количество снаряжения по убыванию"/>
+                    <ComboBoxItem Content="Количество вооружения по возрастанию"/>
+                    <ComboBoxItem Content="Количество вооружения по убыванию"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Тип: " HorizontalAlignment="Center"/>
+                <ComboBox Name="TypeCB" MinWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="TypeCB_SelectionChanged" DisplayMemberPath="name"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ListView Grid.Row="2" Name="UnitsLV" ItemsSource="{Binding Units}" HorizontalContentAlignment="Stretch" Background="{StaticResource BackgroundColor}" SelectionChanged="UnitsLV_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center" Margin="5">
+                                <TextBlock Text="{Binding locations.FullAddress, StringFormat='Адрес: {0}'}"/>
+                                <TextBlock Text="{Binding troop_types.name, StringFormat='Тип: {0}'}"/>
+                                <TextBlock Text="{Binding companies_count, StringFormat='Количество рот: {0}'}"/>
+                                <TextBlock Text="{Binding equipment_count, StringFormat='Количество снаряжения: {0}'}"/>
+                                <TextBlock Text="{Binding weapons_count, StringFormat='Количество вооружения: {0}'}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
